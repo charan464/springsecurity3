@@ -13,39 +13,28 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 public class Authority implements GrantedAuthority{
 	
-	
-	public Authority(String roleName) {
-		super();
-		this.roleName = roleName;
-	}
-
-
-
-	public Authority() {
-		// TODO Auto-generated constructor stub
-	}
-
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name="ROLE_NAME")
-	private String roleName;
-	
-	
 
-	@Override
-	public String getAuthority() {
-		return roleName;
-	}
 
+	
 
 
 	public long getId() {
 		return id;
 	}
+
+
+
+
+
+	public Authority() {
+		super();
+	}
+
+
 
 
 
@@ -55,16 +44,39 @@ public class Authority implements GrantedAuthority{
 
 
 
-	public String getRoleName() {
-		return roleName;
+	
+	@Column(name = "USER_CODE")
+	private String roleCode;
+	
+
+	public Authority(String roleCode ) {
+		// TODO Auto-generated constructor stub
+		this.roleCode = roleCode;
+		
 	}
 
 
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+
+	@Override
+	public String getAuthority() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
 
+	
 }

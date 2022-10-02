@@ -36,10 +36,21 @@ public class User implements UserDetails{
 	@ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinTable(name="AUTH_USER_AUTHORITY",joinColumns = @JoinColumn(referencedColumnName = "id"),
 	
-	inverseJoinColumns = @JoinColumn(referencedColumnName = "ROLE_NAME")
+	inverseJoinColumns = @JoinColumn(referencedColumnName = "id")
 			)
 	private List<Authority>authorites;
 	
+	private boolean emailGeneration;
+	
+	
+
+	public boolean getEmailGeneration() {
+		return emailGeneration;
+	}
+
+	public void setEmailGeneration(boolean emailGeneration) {
+		this.emailGeneration = emailGeneration;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

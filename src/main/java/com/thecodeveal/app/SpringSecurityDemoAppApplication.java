@@ -1,6 +1,6 @@
 package com.thecodeveal.app;
 
-import javax.annotation.PostConstruct;
+
 
 import org.jboss.jandex.VoidType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,17 @@ import com.thecodeveal.app.repo.UserDetailsRepository;
 
 import java.util.*;
 
+import javax.annotation.PostConstruct;
+
 @SpringBootApplication
 public class SpringSecurityDemoAppApplication {
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	UserDetailsRepository userDetailsRepository;
 	
 	@Autowired
-	UserDetailsRepository userDetailsRepository;
+	PasswordEncoder passwordEncoder;
+	
 	
 	
 	public static void main(String[] args) {
@@ -31,28 +34,37 @@ public class SpringSecurityDemoAppApplication {
 	@PostConstruct
 	protected void init()
 	{
-		List<Authority>authorityList=new ArrayList<>();
 		
-		authorityList.add(new Authority("USER"));
+		if(userDetailsRepository.findByUsername("saicharanpoleboina@gmail.com")==null)
+		{
+			List<Authority>authorityList=new ArrayList<>();
+			
+			authorityList.add(new Authority("USER"));
+			
+			User user =new User();
 		
-		User user =new User();
-		
-		user.setUsername("saicharanpoleboina");
-		
-		user.setPassword(passwordEncoder.encode("charan@464"));
-		
-		user.setAuthorites(authorityList);
-		
-		userDetailsRepository.save(user);
-		
+			user.setUsername("saicharanpoleboina@gmail.com");
+			
+			user.setPassword(passwordEncoder.encode("charan@464"));
+			
+			user.setAuthorites(authorityList);
+			
+			
+			userDetailsRepository.save(user);
+			
 		System.out.println(user.getUsername() +" "+user.getPassword());
+		}
+		
+		
+		
 		
 	}
 
-    private Authority createAuthority(String roleName)
+    private Authority createAuthority(String roleCode,String roleDescription)
     {
     	Authority authority=new Authority();
-    	authority.setRoleName(roleName);
+    	authority.setRoleCode(roleCode);
+
     	return authority;
     	
     	
